@@ -1,0 +1,76 @@
+### cmd
+CC   = gcc
+CXX  = g++
+AR   = ar
+
+#Debug Version
+#CFLAGS  = -g -Wall -pipe -fno-ident -MMD -D_GNU_SOURCE -D_REENTRNT -D_DEBUG_BUIL -fPIC
+
+#Release Version
+CFLAGS  = -O3 -Wall -pipe -fno-ident -MMD -D_GNU_SOURCE -D_REENTRNT -D_RELEASE_BUILD -fPIC
+
+#-D_NEED_CHECK_OPEN
+
+CXXFLAGS= $(CFLAGS)
+
+dirs = baselib outerlib app
+
+define get_trunk_path
+	trunk_path=`pwd`; \
+	for dir in $(dirs); do \
+		if [[ $${trunk_path} = *$$dir* ]]; then \
+			trunk_path=`echo $${trunk_path} | sed "s/\/$$dir.*//"`; \
+			break; \
+		fi \
+	done; \
+	echo $${trunk_path}
+endef
+
+PATH_PLATFORM_PRJ := $(shell $(call get_trunk_path))
+
+PATH_CGI  =  /data/release/sgonline/pi/cgi/
+PATH_TOOL  =  /data/release/sgonline/pi/tools/
+
+### INNER LIB DIR
+PATH_INNERLIB_PRJ			= $(PATH_PLATFORM_PRJ)/innerlib
+### OUTTER LIB DIR
+#PATH_OUTER_LIB_PRJ			= $(PATH_PLATFORM_PRJ)/outerlib
+
+
+### BASE LIB
+BASE_INC		= -I$(PATH_PLATFORM_PRJ)/baselib/include
+LIB_BASE		= -L$(PATH_PLATFORM_PRJ)/baselib/lib
+BASE_LIB		= $(LIB_BASE) -lsgonlinebase
+
+### FCGI LIB
+FCGI_INC		= -I$(PATH_PLATFORM_PRJ)/outerlib/fcgi/include
+FCGI_LIB		= -L/usr/local/service/fcgi-2.4.0/lib -lfcgi++ -lfcgi -lnsl -Wl,--rpath -Wl,/usr/local/services/fcgi/lib
+
+### DBC LIB
+DBC_INC			= -I$(PATH_PLATFORM_PRJ)/outerlib/dbc/include
+DBC_LIB			= -L$(PATH_PLATFORM_PRJ)/outerlib/dbc/lib -ldbs-gcc-4.4
+
+### DATA
+DATA_INC		= -I$(PATH_PLATFORM_PRJ)/app/data
+DATA_LIB		= -L$(PATH_PLATFORM_PRJ)/app/data -lsgonlinedata
+
+### KERNEL
+KERNEL_INC		= -I$(PATH_PLATFORM_PRJ)/app/kernel
+KERNEL_LIB		= -L$(PATH_PLATFORM_PRJ)/app/kernel -lsgonlinekernel
+
+### COMMON
+COMMON_INC		= -I$(PATH_PLATFORM_PRJ)/app/common
+COMMON_LIB		= -L$(PATH_PLATFORM_PRJ)/app/common -lsgonlinecommon
+
+### LOGIC
+LOGIC_INC		= -I$(PATH_PLATFORM_PRJ)/app/logic
+LOGIC_LIB		= -L$(PATH_PLATFORM_PRJ)/app/logic -lsgonlinelogic
+
+### PLATFORM
+PLATFORM_INC		= -I$(PATH_PLATFORM_PRJ)/app/platform
+PLATFORM_LIB		= -L$(PATH_PLATFORM_PRJ)/app/platform -lsgonlineplatform
+
+### PENGYOU
+PENGYOU_INC		= -I$(PATH_PLATFORM_PRJ)/outerlib/pengyou/include
+PENGYOU_LIB		= -L$(PATH_PLATFORM_PRJ)/outerlib/pengyou/lib -lsgonlineopenapi -lcurl -lz -ldl
+

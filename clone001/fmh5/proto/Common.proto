@@ -1,0 +1,43 @@
+package Common;
+
+message Login {
+		required uint32 uid 				= 1;
+		required string openid				= 2;
+		required string openkey				= 3;
+		required uint32 ts 					= 4;
+		required string sig					= 5;
+		required bool 	isnew				= 6;
+		required uint32 platform 			= 7;
+		optional string fig					= 8;
+}
+message Kick{
+		required string reason				= 1;
+}
+message ChangeName {
+		required uint32 uid 				= 1;
+		required bytes name				 	= 2;
+		required bytes fig				 	= 3;
+}
+message ReplyChangeName {
+		required bytes name				 	= 1;
+		required bytes fig				 	= 2;
+}
+message Pay {
+		required uint32 uid 				= 1;
+		required uint32 cash 				= 2;
+		required uint32 ts 					= 3;
+}
+message ReplyPay {
+		required uint32 ret 				= 1;
+		optional bytes name				 	= 2;
+}
+message NoticePay {
+		required uint32 cash 				= 1;
+		required uint32 vip_level			= 2; 
+		required uint32	acc_recharge		= 3;
+}
+
+message ShutDown {
+		required uint32 ts					= 1;
+		required string sign				= 2;
+}

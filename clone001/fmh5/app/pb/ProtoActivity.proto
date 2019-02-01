@@ -1,0 +1,15 @@
+package ProtoActivity;
+
+//通用活动消息
+message GameAcitivityCPP
+{
+	required uint32 id		= 1;  //活动id
+	required uint32 version = 2;  //活动版本
+	repeated uint32 actdata = 3;  //活动数据。以数组的形式存放.根据下标区分不同的数据
+}
+
+//活动集合
+message GameAcitivityAllCPP
+{
+	repeated GameAcitivityCPP activities = 1;  //活动
+}

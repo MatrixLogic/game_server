@@ -1,0 +1,5 @@
+package Demo;
+
+message Demo {
+		required uint32 test		= 1;
+}

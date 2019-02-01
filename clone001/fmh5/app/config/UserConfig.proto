@@ -1,0 +1,25 @@
+package UserCfg;
+
+import "CommonGiftConfig.proto";
+
+message UserBase
+{
+	required uint32 coin		= 1;
+	required uint32 cash		= 2;
+	required uint32 level		= 3;
+	required uint32 exp			= 4;
+}
+
+message Build
+{
+	required uint32 buildid = 1;
+	repeated uint32 pos		= 2;
+}
+
+message User
+{
+	required	UserBase   user_init 						= 1;  //玩家基本属性
+	repeated	uint64	   user_exp							= 2;  //玩家升级经验
+	repeated Build			builds							= 3;  //建筑
+	required CommonGiftConfig.CommonModifyItem initprops 	= 4; //新手初始道具
+}

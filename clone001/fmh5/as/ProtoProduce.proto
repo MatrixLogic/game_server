@@ -1,0 +1,45 @@
+package ProtoProduce;
+
+import "DataCommon.proto";
+
+message CropLandCPP
+{
+	required uint32 ud				= 1;  //建筑ud中的农地
+	required uint32 plant 			= 2;  //农作物id
+	required uint32 status			= 3;  //状态. 0-空闲 1-生长中 2-可收获
+	required uint32 harvestTime 	= 4;  //收获时间
+}
+
+//种植
+message PlantCropReq
+{
+	repeated uint32 uds 	= 1 ; //农地ud集合
+	required uint32 plant	= 2; //农作物ud
+}
+
+message PlantCropResp
+{
+	repeated CropLandCPP cropland 				= 1; //农地信息
+	required DataCommon.CommonItemsCPP commons  = 2; //农作物
+}
+
+//作物成熟通知
+message PushHarvestReq
+{
+	repeated CropLandCPP cropland 	= 1; //农地最新状态
+}
+
+//收割
+message ReapCropReq
+{
+	repeated uint32 uds 	= 1 ; //农地ud集合
+}
+
+message ReapCropResp
+{
+	repeated CropLandCPP cropland 				= 1; //农地信息
+	required DataCommon.CommonItemsCPP commons  = 2; //农作物
+	required bool 		isfull					= 3;  //是否满仓
+}
+
+

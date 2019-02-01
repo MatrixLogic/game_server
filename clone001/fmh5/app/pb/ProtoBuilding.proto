@@ -1,0 +1,75 @@
+package ProtoBuilding;
+
+import "DataCommon.proto";
+import "ProtoProduce.proto";
+
+//建筑
+message BuildingCPP
+{
+	required uint32 ud			 = 1;  //建筑ud
+	required uint32 buildId		 = 2;  //建筑id
+	repeated uint32 position	 = 3;  //
+	required uint32 direct		 = 4;  //朝向. 0-按照配置; 1-翻转
+	required uint32 doneTime	 = 5;  //建造结束时间
+	required uint32 level		 = 6;  //建筑等级。所有建筑，等级为0不可使用
+}
+
+//设备星级
+message EquipmentStarCPP
+{
+	required uint32 id			= 1;  //设备id
+	required uint32 star		= 2; //星级
+	required uint32 usedtime	= 3;  //使用时间
+}
+
+//建造
+message BuildReq
+{
+	required uint32 buildId	= 1;  //建筑id
+	repeated uint32 pos		= 2;  //坐标.[x,y]
+}
+
+message BuildResp
+{
+	required BuildingCPP 	building	= 1;  //建筑
+	required DataCommon.CommonItemsCPP commons  = 2;  //属性或者道具的通用修改
+	optional ProtoProduce.CropLandCPP lands		= 3; //土地
+	optional EquipmentStarCPP 	equipmentstar	= 4;  //设备星级
+}
+
+//移动
+message MoveReq
+{
+	required uint32 ud	= 1;  //建筑ud
+	repeated uint32 pos	= 2;  //新坐标.[x,y]
+}
+
+message MoveResp
+{
+	required bool result	= 1;  //移动结果
+}
+
+//翻转
+message FlipReq
+{
+	required uint32 ud	= 1;  //建筑ud
+}
+
+message FlipResp
+{
+	required bool result	= 1;  //翻转结果
+}
+
+//建筑(粮仓、货仓)升级
+message BuildingUpReq
+{
+	required uint32 ud	= 1;  //建筑ud
+}
+
+message BuildingUpResp
+{
+	required DataCommon.CommonItemsCPP commons  = 1;  //属性或者道具的通用修改
+}
+
+
+ 

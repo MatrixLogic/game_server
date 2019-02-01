@@ -1,0 +1,136 @@
+package ProtoProduce;
+
+import "DataCommon.proto";
+
+message CropLandCPP
+{
+	required uint32 ud				= 1;  //建筑ud中的农地
+	required uint32 plant 			= 2;  //农作物id
+	required uint32 status			= 3;  //状态. 0-空闲 1-生长中 2-可收获
+	required uint32 harvestTime 	= 4;  //收获时间
+}
+
+//种植
+message PlantCropReq
+{
+	repeated uint32 uds 	= 1 ; //农地ud集合
+	required uint32 plant	= 2; //农作物ud
+}
+
+message PlantCropResp
+{
+	repeated CropLandCPP cropland 				= 1; //农地信息
+	required DataCommon.CommonItemsCPP commons  = 2; //农作物
+}
+
+//收割
+message ReapCropReq
+{
+	repeated uint32 uds 	= 1 ; //农地ud集合
+}
+
+message ReapCropResp
+{
+	repeated CropLandCPP cropland 				= 1; //农地信息
+	required DataCommon.CommonItemsCPP commons  = 2; //农作物
+	required bool 		isfull					= 3;  //是否满仓
+}
+
+//----------------设备生产
+message ProduceEquipCPP
+{
+	required uint32 ud			= 1;  //设备ud，值是建筑ud
+	required uint32 status 		= 2;  //设备状态. 0-空闲 1-生产中 2.暂停生产
+	required uint32 queuenum 	= 3;  //队列数目
+	repeated uint32 queuedata 	= 4;  //生产队列中的产品id
+	repeated uint32 shelfdata	= 5;  //展示架中的产品id
+	required uint32 finish_time = 6;  //生产结束时间
+}
+
+//扩建队列
+message ExpandQueueReq
+{
+	required uint32 equipud = 1;  //设备ud
+}
+
+message ExpandQueueResp
+{
+	required ProduceEquipCPP equipment 			= 1;  //设备信息
+	required DataCommon.CommonItemsCPP commons  = 2; //消耗
+}
+
+//加入生产队列
+message JoinQueueReq
+{
+	required uint32 propsid	= 1;  //产品id
+	required uint32 equipud = 2;  //设备ud
+}
+
+message JoinQueueResp
+{
+	required ProduceEquipCPP equipment 			= 1;  //设备信息
+	required DataCommon.CommonItemsCPP commons  = 2; //消耗
+}
+
+//取回仓库
+message FetchProductReq
+{
+	required uint32 pos		= 1;  //展示架索引
+	required uint32 equipud = 2;  //设备ud
+}
+
+message FetchProductResp
+{
+	required ProduceEquipCPP equipment 			= 1;  //设备信息
+	optional DataCommon.CommonItemsCPP commons  = 2; //产品
+	required bool 		isfull					= 3;  //是否满仓
+}
+
+//----------------------动物生产
+message AnimalCPP
+{
+	required uint32 ud			= 1;  //动物ud
+	required uint32 residenceUd = 2; //住所ud
+	required uint32 animalId	= 3; //动物id
+	required uint32 status		= 4;  //动物状态. 0-饥饿 1-成长 2-饱腹
+	required uint32 fullTime	= 5;  //饱腹时间
+}
+
+//领养动物
+message AdoptAnimalReq
+{
+	required uint32 buildud		= 1;  //动物住所ud
+}
+
+message AdoptAnimalResp
+{
+	required AnimalCPP   animal 				= 1;  //动物信息
+	required DataCommon.CommonItemsCPP commons  = 2; //消耗
+}
+
+//喂养动物
+message FeedAnimalReq
+{
+	required uint32 animalud	= 1; //动物ud
+	required uint32 fodderud	= 2; //饲料ud
+}
+
+message FeedAnimalResp
+{
+	required AnimalCPP   animal 				= 1;  //动物信息
+	required DataCommon.CommonItemsCPP commons  = 2; //消耗
+}
+
+//获取产品
+message ObtainProductReq
+{
+	required uint32 animalud	= 1; //动物ud
+}
+
+message ObtainProductResp
+{
+	required bool 		isfull					= 1;  //是否满仓
+	optional AnimalCPP   animal 				= 2;  //动物信息
+	optional DataCommon.CommonItemsCPP commons  = 3; //产品	
+}
+

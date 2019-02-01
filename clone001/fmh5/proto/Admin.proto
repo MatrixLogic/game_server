@@ -1,0 +1,40 @@
+package Admin;
+
+message AddCash {
+		required uint32 uid 				= 1;
+		required int32 cash 				= 2;
+}
+message ReplyAddCash {
+		required uint32 uid 				= 1;
+		required uint32 cash				= 2;
+}
+
+message AsycItem{
+		required uint32 uid 				= 1;
+		required uint32 id 					= 2;
+		required uint32 count 				= 3;
+}
+message AsycAdd{
+		repeated AsycItem item				= 1;
+}
+
+message AsycAddResp
+{
+	required uint32 ret	=	1;
+}
+
+message RequestForbidTS
+{
+	required uint32 uid 				= 1;
+}
+message ReplyForbidTS
+{
+	required uint32 forbid_ts			= 1;
+	required bytes reason				= 2;
+}
+message SetForbidTS
+{
+	required uint32 uid 				= 1;
+	required uint32 forbid_ts			= 2;
+	required bytes reason				= 3;
+}

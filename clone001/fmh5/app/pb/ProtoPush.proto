@@ -1,0 +1,28 @@
+package ProtoPush;
+
+import "ProtoBuilding.proto";
+import "ProtoProduce.proto";
+import "DataCommon.proto";
+
+//建筑相关推送
+message PushBuildingsCPP
+{
+	repeated ProtoBuilding.BuildingCPP buildings	 		= 1;  //建筑
+	repeated ProtoProduce.CropLandCPP croplands		 		= 2; //农地
+	repeated ProtoProduce.ProduceEquipCPP equipments 		= 3; //生产设备
+	repeated ProtoProduce.AnimalCPP		 animals	 		= 4;  //动物
+	repeated ProtoBuilding.EquipmentStarCPP equipmentstar 	= 5;  //设备星级
+}
+
+//用户升级了
+message PushUserUpLevel
+{
+	required DataCommon.CommonItemsCPP commons	= 1;
+}
+
+//整点推送
+message PushOnceEveryDayReward
+{
+	
+}
+

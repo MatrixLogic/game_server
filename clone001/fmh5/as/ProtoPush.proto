@@ -1,0 +1,27 @@
+package ProtoPush;
+
+import "ProtoBuilding.proto";
+import "ProtoProduce.proto";
+
+//建筑相关推送
+message PushBuildingsCPP
+{
+	repeated ProtoBuilding.BuildingCPP buildings	= 1;  //建筑
+	repeated ProtoProduce.CropLandCPP croplands		= 2; //农地
+}
+
+//用户升级了
+message PushUserUpLevel
+{
+	required uint32	uid 		= 1;
+	required uint32	oldLevel 	= 2; //老的用户等级
+	required uint32	newLevel	= 3; //新的用户等级
+	required uint64	exp			= 4; //经验
+}
+
+//整点推送
+message PushOnceEveryDayReward
+{
+	
+}
+

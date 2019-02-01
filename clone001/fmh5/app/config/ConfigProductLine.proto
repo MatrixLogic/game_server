@@ -1,0 +1,32 @@
+package ConfigProductLine;
+
+import "CommonGiftConfig.proto";
+
+message EquipLine
+{
+	required uint32 id										= 1;		//设备id
+	repeated CommonGiftConfig.CommonModifyItem product_list = 2; //产品列表
+	required uint32 maxqueue								= 3;
+	repeated CommonGiftConfig.CommonModifyItem queue_price 	= 4;  //队列价格
+}
+
+message AnimalLine
+{
+	required uint32 id									= 1;  //动物id
+	required uint32 fodder								= 2; //饲料id
+	required CommonGiftConfig.CommonModifyItem product 	= 3; //产品
+}
+
+message MaterailReward
+{
+	required uint32 init_count	= 1;  //初始次数
+	required uint32  rate		= 2;  //是否有材料的概率
+	repeated CommonGiftConfig.CommonModifyItem random_reward	= 3;   //材料
+}
+
+message ProductLine
+{
+	repeated EquipLine equipline 	= 1;  //设备生产线
+	repeated AnimalLine animal_line	= 2; //动物生产线
+	required MaterailReward get_storage_material= 3;  //随机材料的获得
+}

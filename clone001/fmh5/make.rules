@@ -1,0 +1,97 @@
+### cmd
+CC   = gcc
+CXX  = g++
+AR   = ar
+
+#Debug Version
+CFLAGS  = -g -Wall -pipe -fno-ident -MMD -D_GNU_SOURCE -D_REENTRNT -D_DEBUG_BUILD -fPIC
+
+#Release Version
+#CFLAGS  = -O3 -Wall -pipe -fno-ident -MMD -D_GNU_SOURCE -D_REENTRNT -D_RELEASE_BUILD -fPIC
+
+CXXFLAGS= $(CFLAGS)
+
+dirs = outerlib baselib proto cgiapp access app
+
+define get_trunk_path
+	trunk_path=`pwd`; \
+	for dir in $(dirs); do \
+		if [[ $${trunk_path} = *$$dir* ]]; then \
+			trunk_path=`echo $${trunk_path} | sed "s/\/$$dir.*//"`; \
+			break; \
+		fi \
+	done; \
+	echo $${trunk_path}
+endef
+
+PATH_PLATFORM_PRJ := $(shell $(call get_trunk_path))
+
+################################GERNERAL
+### BASE LIB
+BASE_INC		= -I$(PATH_PLATFORM_PRJ)/baselib/include
+BASE_LIB		= -L$(PATH_PLATFORM_PRJ)/baselib/lib -lsg17base -lpthread
+
+### FCGI LIB
+FCGI_INC		= -I$(PATH_PLATFORM_PRJ)/outerlib/fcgi/include
+FCGI_LIB		= -L/usr/local/service/fcgi-2.4.0/lib -lfcgi++ -lfcgi -lnsl -Wl,--rpath -Wl,/usr/local/services/fcgi/lib
+
+### DBC LIB
+DBC_INC			= -I$(PATH_PLATFORM_PRJ)/outerlib/dbc/include
+DBC_LIB			= -L$(PATH_PLATFORM_PRJ)/outerlib/dbc/lib -ldbs-gcc-4.4
+
+### PENGYOU
+PENGYOU_INC		= -I$(PATH_PLATFORM_PRJ)/outerlib/pengyou/include
+PENGYOU_LIB		= -L$(PATH_PLATFORM_PRJ)/outerlib/pengyou/lib -lsg17openapi -lcurl -lz -ldl
+
+### PROTO
+PROTO_INC       = -I$(PATH_PLATFORM_PRJ)/proto
+PROTO_LIB		= -L$(PATH_PLATFORM_PRJ)/proto -lsg17proto
+
+### SAVE
+SAVE_INC      	= -I$(PATH_PLATFORM_PRJ)/save
+SAVE_LIB		= -L$(PATH_PLATFORM_PRJ)/save -lsg17save
+################################CGIAPP
+### CGI_PLATFORM
+CGI_PLATFORM_INC	= -I$(PATH_PLATFORM_PRJ)/cgiapp/platform
+CGI_PLATFORM_LIB	= -L$(PATH_PLATFORM_PRJ)/cgiapp/platform -lsg17cgiplatform
+
+### CGI_KERNEL
+CGI_KERNEL_INC		= -I$(PATH_PLATFORM_PRJ)/cgiapp/kernel
+CGI_KERNEL_LIB		= -L$(PATH_PLATFORM_PRJ)/cgiapp/kernel -lsg17cgikernel
+
+### CGI_COMMON
+CGI_COMMON_INC		= -I$(PATH_PLATFORM_PRJ)/cgiapp/common
+CGI_COMMON_LIB		= -L$(PATH_PLATFORM_PRJ)/cgiapp/common -lsg17cgicommon
+
+### CGI_DATA
+CGI_DATA_INC	= -I$(PATH_PLATFORM_PRJ)/cgiapp/data
+CGI_DATA_LIB	= -L$(PATH_PLATFORM_PRJ)/cgiapp/data -lsg17cgidata
+
+### CGI_LOGIC
+CGI_LOGIC_INC		= -I$(PATH_PLATFORM_PRJ)/cgiapp/logic
+CGI_LOGIC_LIB		= -L$(PATH_PLATFORM_PRJ)/cgiapp/logic -lsg17cgilogic
+
+################################APP
+### KERNEL
+KERNEL_INC		= -I$(PATH_PLATFORM_PRJ)/app/kernel
+KERNEL_LIB		= -L$(PATH_PLATFORM_PRJ)/app/kernel -lsg17kernel
+
+### COMMON
+COMMON_INC		= -I$(PATH_PLATFORM_PRJ)/app/common
+COMMON_LIB		= -L$(PATH_PLATFORM_PRJ)/app/common -lsg17common
+
+### APP_PROTO
+APP_PROTO_INC		= -I$(PATH_PLATFORM_PRJ)/app/pb
+APP_PROTO_LIB		= -L$(PATH_PLATFORM_PRJ)/app/pb -lsg17pb
+
+### CONFIG
+CONFIG_INC		= -I$(PATH_PLATFORM_PRJ)/app/config
+CONFIG_LIB		= -L$(PATH_PLATFORM_PRJ)/app/config -lsg17config
+
+### DATA
+DATA_INC		= -I$(PATH_PLATFORM_PRJ)/app/data
+DATA_LIB		= -L$(PATH_PLATFORM_PRJ)/app/data -lsg17data
+
+### BATTLE
+BATTLE_INC		= -I$(PATH_PLATFORM_PRJ)/app/battle
+BATTLE_LIB		= -L$(PATH_PLATFORM_PRJ)/app/battle -lsg17battle

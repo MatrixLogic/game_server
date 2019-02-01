@@ -1,0 +1,134 @@
+import "ProtoNotify.proto";
+import "ProtoActivity.proto";
+import "ProtoBuilding.proto";
+import "ProtoProduce.proto";
+import "DataCommon.proto";
+
+package User;
+
+message Base {
+	required uint32 uid					 = 1;
+	required uint32 registerPlatform	 = 2;
+	required uint32 registerTime		 = 3;
+	required uint32 lastLoginPlatform	 = 4;
+	required uint32 lastLoginTime		 = 5;
+	required uint32 loginTimes			 = 6;
+	required uint32 loginDays			 = 7;
+	required uint32 lastActiveTime 	 = 8;
+	required uint32 lastOffTime	 	 = 9;
+	required uint32 forbidTs			 = 10;
+	required bytes forbidReason		 = 11;
+	required uint32 tutorialStage		 = 12;
+	required bytes name					 = 13;
+	required bytes fig					 = 14;
+	required uint64 exp					 = 15;
+	required uint32 level				 = 16;
+	required uint32 acccharge			 = 17;
+	required uint32 viplevel			 = 18;
+	required uint32 cash				 = 19;
+	required uint32 coin				 = 20;
+	required uint32 firstRecharge 		 = 21;  //首充 1--可领取 2--已经领取
+	required uint32 allianceId			 = 22;
+	required bytes barrier				 = 23;  //障碍物是否被移除的状态。位标志
+}
+
+message ActivityItem{
+	required uint32	id			= 1;
+	required uint32	bts			= 2;
+	required uint32	ets			= 3;
+	required uint32	ver			= 4;
+}
+message Activity{
+	repeated ActivityItem act	 = 1;
+}
+
+message User 
+{
+	required Base base										= 1;
+	required uint32 ts										= 2; //服务器时间
+	required Activity activity								= 3; //活动时间
+	optional ProtoNotify.NotifyItemCPPAll 	notifies		= 4; //活动的通知
+	required AccumulateCharge	       charges				= 5; //累积充值.与累积充值活动无关。只保留7日充值数据
+	required ProtoActivity.GameAcitivityAllCPP gameactivity	= 6; //已开启的活动
+	repeated DataCommon.PropsItemCPP	 item	            = 7; //物品
+	repeated ProtoBuilding.BuildingCPP		builds			= 8; //建筑物
+	repeated ProtoProduce.CropLandCPP		cropland		= 9; //农地
+	repeated ProtoProduce.ProduceEquipCPP equipments		= 10; //生产设备		
+	repeated ProtoProduce.AnimalCPP 	animals				= 11; //动物	
+	repeated ProtoBuilding.EquipmentStarCPP equipmentstars	= 12;  //设备星级
+}
+
+message RequestOtherUser{
+		required uint32 uid = 1;
+}
+message OtherUser {
+		required Base base								= 1;
+}
+
+message Tutorial_stage{	
+	required uint32 tutorialStage		 = 1;
+}
+
+message ServerTime{	
+	required uint32 ts					 = 1;
+}
+
+//////////////////////////////////
+//消耗钻石
+message CostCashReq {
+	required uint32  cash 	 	= 1;  //消耗钻石数
+	required string  opCode 	= 2;  //操作备注（不能为空,勿用中文）
+	required uint32	 operation 	= 3;  //用于区分客户端逻辑
+}
+
+message CostCashResp {
+	required uint32  cash 		= 1;  //最新钻石数
+	required uint32	 operation 	= 2;  //用于区分客户端逻辑
+}
+//////////////////////////////////
+
+//7天内的充值数据
+message ChargeItem
+{
+	required uint32 cash = 1;  //充值金额
+	required uint32 ts 	 = 2;   //充值时间
+}
+
+message AccumulateCharge
+{
+	repeated ChargeItem accumulateCharge	= 1;   //累积充值
+}
+
+//充值后的推送
+message PushAccumulateChangeReq
+{
+	required AccumulateCharge  changeAcccharge = 1;  //改变后的累积充值
+}
+
+//加速
+message SpeedUpReq
+{
+	required uint32 ud	= 1; //建筑ud
+} 
+
+message SpeedUpResp
+{
+	optional DataCommon.CommonItemsCPP commons  = 1; //钻石或收获
+}
+
+message BuyMaterialInfo
+{
+	required uint32 props_id  = 1;
+	required uint32 props_cnt = 2;
+}
+
+message BuyMaterialReq
+{
+	repeated BuyMaterialInfo buy_info = 1;
+}
+
+message BuyMaterialResp
+{
+	required DataCommon.CommonItemsCPP commons  = 1;  //属性或者道具的通用修改
+}
+
